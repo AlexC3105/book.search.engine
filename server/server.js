@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-const db = require('./config/connection');
+const mongoose = require('mongoose'); // Import mongoose
+
 const routes = require('./routes');
 
 const app = express();
@@ -18,11 +19,9 @@ app.use(routes);
 
 const startServer = async () => {
   try {
-    await db.connect(process.env.MONGODB_URI || 'mongodb://localhost/googlebooks', {
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/3001', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false
     });
     app.listen(PORT, () => {
       console.log(`🌍 Now listening on localhost:${PORT}`);
