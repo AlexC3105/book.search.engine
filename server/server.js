@@ -18,7 +18,12 @@ app.use(routes);
 
 const startServer = async () => {
   try {
-    await db.once('open');
+    await db.connect(process.env.MONGODB_URI || 'mongodb://localhost/googlebooks', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    });
     app.listen(PORT, () => {
       console.log(`🌍 Now listening on localhost:${PORT}`);
     });
