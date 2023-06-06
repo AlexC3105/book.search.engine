@@ -4,9 +4,13 @@ const apiRoutes = require('./api');
 
 router.use('/api', apiRoutes);
 
-// serve up react front-end in production
-router.use((req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+// Serve up React front-end in production
+const staticFilesPath = path.join(__dirname, '../../client/build');
+router.use(express.static(staticFilesPath));
+
+// Handle requests to non-API routes by serving the React app
+router.get('*', (req, res) => {
+  res.sendFile(path.join(staticFilesPath, 'index.html'));
 });
 
 module.exports = router;
